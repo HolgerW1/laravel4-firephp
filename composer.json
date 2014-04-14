@@ -1,0 +1,21 @@
+{
+    "name": "p3in/firephp",
+    "description": "FirePHP Support for Laravel 4",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jubair Saidi",
+            "email": "jubair.saidi@p3in.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "P3in\\Firephp\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
