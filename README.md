@@ -5,7 +5,7 @@ This Laravel 4 package brings FirePHP to Laravel 4.  By default it will log to y
 
 ## Installation
 
-Install the package through Composer.
+Add `p3in/firephp` to your composer requirements:
 
 	"require-dev": {
 		"p3in/firephp": "dev-master"
@@ -13,11 +13,16 @@ Install the package through Composer.
 
 Next, update Composer from the Terminal:
 
-	composer update --dev
+	$ composer update --dev
 
-Once this operation completes, the final step is to add the service provider. Open `app/config/app.php`, and add a new item to the providers array.
+Once the package is installed, open your `app/config/app.php` configuration file and locate the providers key. Add the following line to the end.
 
 	'P3in\Firephp\FirephpServiceProvider',
+
+Finally, publish the default configuration (it will end up in app/config/packages/p3in/firephp/config.php):
+
+	$ php artisan config:publish p3in/firephp
+
 
 ## Usage
 
