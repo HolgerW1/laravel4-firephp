@@ -59,14 +59,15 @@ class FirephpServiceProvider extends ServiceProvider {
 				break;
 			}
 		});
-
-		$this->app->events->listen('illuminate.query', function($query, $params, $time, $conn){
-			$this->app['fb']->group("$conn Query");
-				$this->app['fb']->log($query,'Query String');
-				$this->app['fb']->log($params,'Parameters');
-				$this->app['fb']->log($time,'Execution Time');
-			$this->app['fb']->groupEnd();
-		});
+		if (Config::get('firephp::db_profiler')) {
+			$this->app->events->listen('illuminate.query', function($query, $params, $time, $conn){
+				$this->app['fb']->group("$conn Query");
+					$this->app['fb']->log($query,'Query String');
+					$this->app['fb']->log($params,'Parameters');
+					$this->app['fb']->log($time,'Execution Time');
+				$this->app['fb']->groupEnd();
+			});
+		}
 
 	}
 
