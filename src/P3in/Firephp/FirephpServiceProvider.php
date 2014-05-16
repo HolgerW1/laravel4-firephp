@@ -54,6 +54,8 @@ class FirephpServiceProvider extends ServiceProvider {
 				case FirePHP::ERROR :
 					$this->app['fb']->{$level}($message);
 				break;
+				case 'WARNING':
+					$this->app['fb']->warn($message);
 				default :
 					$this->app['fb']->log($message);
 				break;

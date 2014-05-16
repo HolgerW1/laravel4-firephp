@@ -36,16 +36,16 @@ You can use it in a number of ways.
 	// Use the Firebug methods.
 	FB::group('testGRoup');
 		FB::info('This is some useful information.');
-		FB::warning('Something could be going wrong.');
+		FB::warn('Something could be going wrong.');
 		FB::error('Something is really going wrong.');
-	FB::endGroup();
+	FB::groupEnd();
 
 	// Or a combination of both.
 	FB::group('testGRoup');
 		Log::info('This is some useful information.');
 		Log::warning('Something could be going wrong.');
 		Log::error('Something is really going wrong.');
-	FB::endGroup();
+	FB::groupEnd();
 
 Remember, by default all Logged events will be sent to your FireBug console.
 
