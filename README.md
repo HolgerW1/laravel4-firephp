@@ -2,6 +2,12 @@
 
 This Laravel 4 package brings FirePHP to Laravel 4.  By default it will log to your FireBug Console Database query information and log events.
 
+## Pre-Installation
+
+Before installing this package, you should make sure you have FirePHP Firefox addon installed and your Firebug Net panel enabled.
+
+[Install Firebug](https://addons.mozilla.org/en-US/firefox/addon/firebug/)
+[Install FirePHP](https://addons.mozilla.org/en-US/firefox/addon/firephp/)
 
 ## Installation
 
