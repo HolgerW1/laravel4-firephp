@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use P3in\Firephp\FirePHPCore\FirePHP;
 use P3in\Firephp\FirePHPCore\FB;
+use App;
 use Config;
 
 class FirephpServiceProvider extends ServiceProvider {
@@ -44,33 +45,33 @@ class FirephpServiceProvider extends ServiceProvider {
 			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
 			$loader->alias('FB', 'P3in\Firephp\Facades\FB');
 		});
+		if(!App::runningInConsole()){
+			$this->app->events->listen('illuminate.log', function($level, $message){
 
-		$this->app->events->listen('illuminate.log', function($level, $message){
-
-			switch (strtoupper($level)){
-				case FirePHP::INFO :
-				case FirePHP::WARN :
-				case FirePHP::LOG :
-				case FirePHP::ERROR :
-					$this->app['fb']->{$level}($message);
-				break;
-				case 'WARNING':
-					$this->app['fb']->warn($message);
-				default :
-					$this->app['fb']->log($message);
-				break;
-			}
-		});
-		if (Config::get('firephp::db_profiler')) {
-			$this->app->events->listen('illuminate.query', function($query, $params, $time, $conn){
-				$this->app['fb']->group("$conn Query");
-					$this->app['fb']->log($query,'Query String');
-					$this->app['fb']->log($params,'Parameters');
-					$this->app['fb']->log($time,'Execution Time');
-				$this->app['fb']->groupEnd();
+				switch (strtoupper($level)){
+					case FirePHP::INFO :
+					case FirePHP::WARN :
+					case FirePHP::LOG :
+					case FirePHP::ERROR :
+						$this->app['fb']->{$level}($message);
+					break;
+					case 'WARNING':
+						$this->app['fb']->warn($message);
+					default :
+						$this->app['fb']->log($message);
+					break;
+				}
 			});
+			if (Config::get('firephp::db_profiler')) {
+				$this->app->events->listen('illuminate.query', function($query, $params, $time, $conn){
+					$this->app['fb']->group("$conn Query");
+						$this->app['fb']->log($query,'Query String');
+						$this->app['fb']->log($params,'Parameters');
+						$this->app['fb']->log($time,'Execution Time');
+					$this->app['fb']->groupEnd();
+				});
+			}
 		}
-
 	}
 
 	/**
