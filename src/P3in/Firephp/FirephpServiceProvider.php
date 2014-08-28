@@ -46,21 +46,30 @@ class FirephpServiceProvider extends ServiceProvider {
 			$loader->alias('FB', 'P3in\Firephp\Facades\FB');
 		});
 		if(!App::runningInConsole()){
-			$this->app->events->listen('illuminate.log', function($level, $message){
-
+			$this->app->events->listen('illuminate.log', function($level, $message, $context){
+				$type = 'log';
+				$errorInfoKeys = Config::get('firephp::error_keys_and_compact_check');
 				switch (strtoupper($level)){
 					case FirePHP::INFO :
 					case FirePHP::WARN :
 					case FirePHP::LOG :
 					case FirePHP::ERROR :
-						$this->app['fb']->{$level}($message);
+						$type = $level;
 					break;
 					case 'WARNING':
-						$this->app['fb']->warn($message);
-					default :
-						$this->app['fb']->log($message);
+						$type = 'warn';
 					break;
 				}
+				$this->app['fb']->group($message->getMessage());
+					foreach ($errorInfoKeys as $key => $compact_check) {
+						if ($data = $message->{$key}()) {
+							if ($compact_check) {
+								$data = json_decode(json_encode($data));
+							}
+							$this->app['fb']->{$type}($data,substr($key,3,strlen($key)));
+						}
+					}
+				$this->app['fb']->groupEnd();
 			});
 			if (Config::get('firephp::db_profiler')) {
 				$this->app->events->listen('illuminate.query', function($query, $params, $time, $conn){
