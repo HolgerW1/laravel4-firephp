@@ -60,16 +60,20 @@ class FirephpServiceProvider extends ServiceProvider {
 						$type = 'warn';
 					break;
 				}
-				$this->app['fb']->group($message->getMessage());
-					foreach ($errorInfoKeys as $key => $compact_check) {
-						if ($data = $message->{$key}()) {
-							if ($compact_check) {
-								$data = json_decode(json_encode($data));
+				if (is_object($message)) {
+					$this->app['fb']->group($message->getMessage());
+						foreach ($errorInfoKeys as $key => $compact_check) {
+							if ($data = $message->{$key}()) {
+								if ($compact_check) {
+									$data = json_decode(json_encode($data));
+								}
+								$this->app['fb']->{$type}($data,substr($key,3,strlen($key)));
 							}
-							$this->app['fb']->{$type}($data,substr($key,3,strlen($key)));
 						}
-					}
-				$this->app['fb']->groupEnd();
+					$this->app['fb']->groupEnd();
+				}else{
+					$this->app['fb']->{$type}($message);
+				}
 			});
 			if (Config::get('firephp::db_profiler')) {
 				$this->app->events->listen('illuminate.query', function($query, $params, $time, $conn){
