@@ -61,7 +61,8 @@ class FirephpServiceProvider extends ServiceProvider {
 					break;
 				}
 				if (is_object($message)) {
-					$this->app['fb']->group($message->getMessage());
+					$groupLabel = $message->getMessage() ? $message->getMessage() : 'Error';
+					$this->app['fb']->group($groupLabel);
 						foreach ($errorInfoKeys as $key => $compact_check) {
 							if ($data = $message->{$key}()) {
 								if ($compact_check) {
