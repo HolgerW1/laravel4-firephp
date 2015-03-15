@@ -12,6 +12,7 @@ Before installing this package, you should make sure you have FirePHP Firefox ad
 ## Installation
 
 Add the GitHub repository to your composer file:
+
 	"repositories": [
 		{
 			"type": "vcs",
@@ -28,7 +29,7 @@ Add `p3in/firephp` to your composer requirements:
 
 Next, update Composer from the Terminal:
 
-	$ composer update --dev
+	$ composer update
 
 Once the package is installed, open your `config/app.php` configuration file and locate the providers key. Add the following line to the end.
 
@@ -36,7 +37,7 @@ Once the package is installed, open your `config/app.php` configuration file and
 
 Finally, publish the default configuration (it will end up in app/config/packages/p3in/firephp/config.php):
 
-	$ php artisan config:publish p3in/firephp
+	$ php artisan vendor:publish
 
 
 ## Usage
