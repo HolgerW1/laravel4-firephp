@@ -1,6 +1,6 @@
-# FirePHP support in Laravel 4
+# FirePHP support in Laravel 5
 
-This Laravel 4 package brings FirePHP to Laravel 4.  By default it will log to your FireBug Console Database query information and log events.
+This Laravel 5 package brings FirePHP to Laravel 5.  By default it will log to your FireBug Console Database query information and log events.
 
 ## Pre-Installation
 
@@ -11,17 +11,26 @@ Before installing this package, you should make sure you have FirePHP Firefox ad
 
 ## Installation
 
+Add the GitHub repository to your composer file:
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/HolgerW1/laravel4-firephp"
+		}
+	]
+
+
 Add `p3in/firephp` to your composer requirements:
 
 	"require-dev": {
-		"p3in/firephp": "dev-master"
+		"p3in/firephp": "dev-laravel5"
 	}
 
 Next, update Composer from the Terminal:
 
 	$ composer update --dev
 
-Once the package is installed, open your `app/config/app.php` configuration file and locate the providers key. Add the following line to the end.
+Once the package is installed, open your `config/app.php` configuration file and locate the providers key. Add the following line to the end.
 
 	'P3in\Firephp\FirephpServiceProvider',
 
