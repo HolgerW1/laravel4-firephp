@@ -37,7 +37,7 @@ class FirephpServiceProvider extends ServiceProvider
      */
     protected function setupConfig()
     {
-        $source = realpath(__DIR__ . '/../../../config/firephp.php');
+        $source = realpath(__DIR__ . '/../../config/firephp.php');
         $this->publishes([$source => config_path('firephp.php')]);
         $this->mergeConfigFrom($source, 'firephp');
     }
